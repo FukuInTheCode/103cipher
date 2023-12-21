@@ -19,26 +19,26 @@ int my_matrix_getcolumn(my_matrix_t *a, uint32_t n, double result[])
     return 0;
 }
 
-void my_matrix_getsubmatrix(my_matrix_t *A, uint32_t const m,
+int my_matrix_getsubmatrix(my_matrix_t *a, uint32_t const m,
     uint32_t const n, my_matrix_t *result)
 {
-    uint32_t i2 = 0;
+    uint32_t my_var[] = {0, 0, 0};
 
-    my_matrix_create(A->m - 1, A->n - 1, 1, result);
-    for (uint32_t i = 0; i < A->m; i++) {
-        if (i == m) continue;
-        uint32_t j2 = 0;
-        uint32_t j = 0;
-        for (; j < A->n && j < n; j++) {
-            result->arr[i2][j2] = A->arr[i][j];
-            j2++;
+    my_matrix_create(a->m - 1, a->n - 1, 1, result);
+    for (uint32_t i = 0; i < a->m; i++) {
+        if (i == m)
+            continue;
+        my_var[0] = 0;
+        for (my_var[1] = 0; my_var[1] < a->n && my_var[1] < n; my_var[1]++) {
+            result->arr[my_var[2]][my_var[0]] = a->arr[i][my_var[1]];
+            my_var[0]++;
         }
-        j++;
-        for (; j < A->n; j++) {
-            result->arr[i2][j2] = A->arr[i][j];
-            j2++;
+        my_var[1]++;
+        for (; my_var[1] < a->n; my_var[1]++) {
+            result->arr[my_var[2]][my_var[0]] = a->arr[i][my_var[1]];
+            my_var[0]++;
         }
-        i2++;
+        my_var[2]++;
     }
+    return 0;
 }
-

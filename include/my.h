@@ -49,7 +49,7 @@ int my_matrix_inverse(my_matrix_t *, my_matrix_t *);
 int my_matrix_inverse_2(my_matrix_t *);
 int my_matrix_fill_from_array(my_matrix_t *, double *, uint32_t);
 int my_matrix_product(my_matrix_t *, uint32_t, ...);
-void my_matrix_getsubmatrix(my_matrix_t *, uint32_t const, uint32_t const,
+int my_matrix_getsubmatrix(my_matrix_t *, uint32_t const, uint32_t const,
     my_matrix_t *);
 int my_matrix_adjugate(my_matrix_t *, my_matrix_t *);
 int my_matrix_copy(my_matrix_t *, my_matrix_t *);
