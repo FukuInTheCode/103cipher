@@ -75,7 +75,8 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
     printf("Key matrix:\n");
     for (int i = 0; i < key_m->m; i++) {
         for (int j = 0; j < key_m->n; j++)
-            printf("%lf\t", suppr_zero(key_m->arr[i][j]));
+            printf((j != key_m->m - 1) ? "%lf\t" : "%lf",
+                suppr_zero(key_m->arr[i][j]));
         printf("\n");
     }
     printf("\nDecrypted message:\n");
@@ -86,7 +87,6 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
             memset((void *)buf, 0, strlen(buf));
         }
     }
-    printf("\n");
     return 0;
 }
 
