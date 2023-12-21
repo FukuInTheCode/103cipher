@@ -96,7 +96,8 @@ int cipher_decrypt(char *message, char *key)
     my_matrix_t mess_m = {0, 0, NULL};
     my_matrix_t result = {0, 0, NULL};
 
-    create_key_matrix(&key_m, key);
+    if (create_key_matrix(&key_m, key))
+        return 84;
     if (create_mess_matrix(&mess_m, message, key_m.n))
         return 84;
     my_matrix_product(&result, 2, &mess_m, &key_m);
