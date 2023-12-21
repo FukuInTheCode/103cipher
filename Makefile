@@ -17,7 +17,9 @@ CSFML = -lcsfml-system -lcsfml-window -lcsfml-network \
 
 CRITERION = -lcriterion
 
-SRC	= cipher.c \
+SRC	= src/cipher.c \
+	  src/cipher_help.c \
+	  src/cipher_args.c \
 
 OBJ	= $(SRC:.c=.o)
 

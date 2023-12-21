@@ -29,4 +29,7 @@
     #include <SFML/System.h>
     #include <SFML/Window.h>
 
+int cipher_help(void);
+int cipher_args(char **);
+
 #endif
