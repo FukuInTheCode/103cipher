@@ -52,9 +52,10 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
     }
     printf("\nEncrypted message:\n");
     for (int i = 0; i < result->m; i++)
-        for (int j = 0; j < result->n; j++)
-            printf((j != result->n - 1 || i != result->m - 1)
-                ? "%.0lf " : "%.0lf", result->arr[i][j]);
+        for (int j = 0; j < result->n && result->arr[i][j]; j++)
+            printf(((j < result->n - 1 && result->arr[i][j + 1]) ||
+                (i < result->m - 1 && result->arr[i + 1][0])) ? "%.0lf " :
+                "%.0lf", result->arr[i][j]);
     printf("\n");
     return 0;
 }

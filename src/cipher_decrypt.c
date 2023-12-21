@@ -81,7 +81,7 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
     }
     printf("\nDecrypted message:\n");
     for (int i = 0; i < result->m; i++) {
-        for (int j = 0; j < result->n; j++) {
+        for (int j = 0; j < result->n && result->arr[i][j]; j++) {
             sprintf(buf, "%lf\n", result->arr[i][j]);
             printf("%c", (char)atoi(buf));
             memset((void *)buf, 0, strlen(buf));
