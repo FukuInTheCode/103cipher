@@ -46,13 +46,13 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
     printf("Key matrix:\n");
     for (int i = 0; i < key_m->m; i++) {
         for (int j = 0; j < key_m->n; j++)
-            printf("%.0lf\t", key_m->arr[i][j]);
+            printf(j != key_m->n - 1 ? "%.0lf\t" : "%.0lf", key_m->arr[i][j]);
         printf("\n");
     }
     printf("\nEncrypted message:\n");
     for (int i = 0; i < result->m; i++)
         for (int j = 0; j < result->n; j++)
-            printf("%.0lf ", result->arr[i][j]);
+            printf(j != result->n - 1 ? "%.0lf " : "%.0lf", result->arr[i][j]);
     printf("\n");
     return 0;
 }
