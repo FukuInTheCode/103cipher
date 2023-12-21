@@ -62,4 +62,14 @@ int my_matrix_identity(uint32_t const, ...);
 int my_matrix_broadcasting(my_matrix_t *, uint32_t, uint32_t, my_matrix_t *);
 int my_matrix_addscalar_2(my_matrix_t *, double);
 
+static inline __attribute__((unused)) double suppr_zero(double x)
+{
+    char buf[1001] = {0};
+
+    sprintf(buf, "%.2lf", x);
+    if (!strcmp("-0.00", buf))
+        return -x;
+    return x;
+}
+
 #endif

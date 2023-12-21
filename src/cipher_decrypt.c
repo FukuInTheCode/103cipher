@@ -31,29 +31,59 @@ static int create_key_matrix(my_matrix_t *key_m, char *key)
     return 0;
 }
 
+static int convert_mess(char *mess, double *mess_arr)
+{
+    char *end_ptr = NULL;
+    int k = 0;
+
+    for (int i = 0; i < strlen(mess); i++) {
+        if (!('0' <= mess[i] && mess[i] <= '9') && mess[i] != ' ')
+            return 84;
+        if (i != 0 && mess[i] != ' ')
+            continue;
+        mess_arr[k] = strtod(mess + i, &end_ptr);
+        k++;
+        if ('0' <= *end_ptr && *end_ptr <= '9')
+            end_ptr++;
+        if (*end_ptr != ' ' && *end_ptr != 0)
+            return 84;
+    }
+    return 0;
+}
+
 static int create_mess_matrix(my_matrix_t *mess_m, char *mess, uint32_t n)
 {
-    double mess_arr[strlen(mess)];
-    uint32_t m = (uint32_t)floor(strlen(mess) / n) + 1;
+    double *mess_arr;
+    int k = 1;
 
-    convert_str(mess, mess_arr);
-    my_matrix_create(m, n, 1, mess_m);
-    my_matrix_fill_from_array(mess_m, mess_arr, strlen(mess));
+    for (int i = 0; mess[i]; i++)
+        k += mess[i] == ' ';
+    mess_arr = calloc(k, sizeof(double));
+    if (!mess_arr || convert_mess(mess, mess_arr))
+        return 84;
+    my_matrix_create(k / n + 1, n, 1, mess_m);
+    my_matrix_fill_from_array(mess_m, mess_arr, k);
+    free(mess_arr);
     return 0;
 }
 
 static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
 {
+    char buf[1001] = {0};
+
     printf("Key matrix:\n");
     for (int i = 0; i < key_m->m; i++) {
         for (int j = 0; j < key_m->n; j++)
-            printf("%lf\t", key_m->arr[i][j]);
+            printf("%lf\t", suppr_zero(key_m->arr[i][j]));
         printf("\n");
     }
-    printf("\nEncrypted message:\n");
+    printf("\nDecrypted message:\n");
     for (int i = 0; i < result->m; i++)
-        for (int j = 0; j < result->n; j++)
-            printf("%.0lf ", result->arr[i][j]);
+        for (int j = 0; j < result->n; j++) {
+            sprintf(buf, "%lf\n", result->arr[i][j]);
+            printf("%c", (char)atoi(buf));
+            memset((void *)buf, 0, strlen(buf));
+    }
     printf("\n");
     return 0;
 }
@@ -65,7 +95,8 @@ int cipher_decrypt(char *message, char *key)
     my_matrix_t result = {0, 0, NULL};
 
     create_key_matrix(&key_m, key);
-    create_mess_matrix(&mess_m, message, key_m.n);
+    if (create_mess_matrix(&mess_m, message, key_m.n))
+        return 84;
     my_matrix_product(&result, 2, &mess_m, &key_m);
     print_matrices(&key_m, &result);
     my_matrix_free(3, &key_m, &mess_m, &result);
