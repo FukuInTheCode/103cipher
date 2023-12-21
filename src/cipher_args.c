@@ -9,5 +9,7 @@
 
 int cipher_args(char **argv)
 {
-    return 0;
+    // detect flag and redirect to associated function
+    cipher_encrypt(argv[1], argv[2]);
+    return 84;
 }
