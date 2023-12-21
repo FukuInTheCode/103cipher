@@ -33,7 +33,7 @@ static int create_key_matrix(my_matrix_t *key_m, char *key)
 static int create_mess_matrix(my_matrix_t *mess_m, char *mess, uint32_t n)
 {
     double mess_arr[strlen(mess)];
-    uint32_t m = (uint32_t)floor(strlen(mess) / n) + 1;
+    uint32_t m = strlen(mess) / n + 1;
 
     convert_str(mess, mess_arr);
     my_matrix_create(m, n, 1, mess_m);
@@ -46,13 +46,15 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
     printf("Key matrix:\n");
     for (int i = 0; i < key_m->m; i++) {
         for (int j = 0; j < key_m->n; j++)
-            printf(j != key_m->n - 1 ? "%.0lf\t" : "%.0lf", key_m->arr[i][j]);
+            printf(j != key_m->n - 1 ? "%.0lf\t" : "%.0lf",
+                key_m->arr[i][j]);
         printf("\n");
     }
     printf("\nEncrypted message:\n");
     for (int i = 0; i < result->m; i++)
         for (int j = 0; j < result->n; j++)
-            printf(j != result->n - 1 ? "%.0lf " : "%.0lf", result->arr[i][j]);
+            printf((j != result->n - 1 || i != result->m - 1)
+                ? "%.0lf " : "%.0lf", result->arr[i][j]);
     printf("\n");
     return 0;
 }

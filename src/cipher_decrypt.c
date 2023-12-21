@@ -22,13 +22,14 @@ static int create_key_matrix(my_matrix_t *key_m, char *key)
 {
     size_t root = (size_t)floor(sqrt(strlen(key)));
     double key_arr[strlen(key)];
+    int error = 0;
 
     root += (pow(root, 2) != strlen(key));
     convert_str(key, key_arr);
     my_matrix_create(root, root, 1, key_m);
     my_matrix_fill_from_array(key_m, key_arr, strlen(key));
-    my_matrix_inverse_2(key_m);
-    return 0;
+    error |= my_matrix_inverse_2(key_m);
+    return error;
 }
 
 static int convert_mess(char *mess, double *mess_arr)
@@ -78,11 +79,12 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
         printf("\n");
     }
     printf("\nDecrypted message:\n");
-    for (int i = 0; i < result->m; i++)
+    for (int i = 0; i < result->m; i++) {
         for (int j = 0; j < result->n; j++) {
             sprintf(buf, "%lf\n", result->arr[i][j]);
             printf("%c", (char)atoi(buf));
             memset((void *)buf, 0, strlen(buf));
+        }
     }
     printf("\n");
     return 0;
