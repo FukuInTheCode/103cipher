@@ -17,7 +17,8 @@ int my_matrix_inverse(my_matrix_t *a, my_matrix_t *result)
         return 84;
     }
     det = my_matrix_det(a);
-    if (!det) {
+    printf("%lf\n", det);
+    if (det == 0) {
         fprintf(stderr, "A is not inversible!\n");
         my_matrix_create(a->m, a->n, 1, result);
         return 84;
@@ -34,6 +35,6 @@ int my_matrix_inverse_2(my_matrix_t *a)
 
     my_matrix_copy(a, &cpy);
     my_matrix_inverse(&cpy, a);
-    my_matrix_free(1, cpy);
+    my_matrix_free(1, &cpy);
     return 0;
 }

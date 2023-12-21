@@ -12,7 +12,7 @@ static int convert_str(char *str, double *str_arr)
     double a = 0.;
 
     for (int i = 0; str[i]; i++) {
-        a = str[i];
+        a = (unsigned char)str[i];
         str_arr[i] = a;
     }
     return 0;
@@ -20,9 +20,10 @@ static int convert_str(char *str, double *str_arr)
 
 static int create_key_matrix(my_matrix_t *key_m, char *key)
 {
-    size_t root = (size_t)floor(sqrt(strlen(key))) + 1;
+    size_t root = (size_t)floor(sqrt(strlen(key)));
     double key_arr[strlen(key)];
 
+    root += (pow(root, 2) != strlen(key));
     convert_str(key, key_arr);
     my_matrix_create(root, root, 1, key_m);
     my_matrix_fill_from_array(key_m, key_arr, strlen(key));

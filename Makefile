@@ -21,6 +21,7 @@ SRC	= src/cipher.c \
 	  src/cipher_help.c \
 	  src/cipher_args.c \
 	  src/cipher_encrypt.c \
+	  src/cipher_decrypt.c \
 	  src/matrix/matrix_create.c \
 	  src/matrix/matrix_det.c \
 	  src/matrix/matrix_get.c \

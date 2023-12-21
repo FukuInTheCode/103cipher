@@ -38,6 +38,7 @@ typedef struct {
 int cipher_help(void);
 int cipher_args(char **);
 int cipher_encrypt(char *, char *);
+int cipher_decrypt(char *, char *);
 
 int my_matrix_create(uint32_t, uint32_t, uint32_t, ...);
 int my_matrix_free(uint32_t, ...);
@@ -48,7 +49,7 @@ int my_matrix_inverse(my_matrix_t *, my_matrix_t *);
 int my_matrix_inverse_2(my_matrix_t *);
 int my_matrix_fill_from_array(my_matrix_t *, double *, uint32_t);
 int my_matrix_product(my_matrix_t *, uint32_t, ...);
-int my_matrix_getsubmatrix(my_matrix_t *, uint32_t const, uint32_t const,
+void my_matrix_getsubmatrix(my_matrix_t *, uint32_t const, uint32_t const,
     my_matrix_t *);
 int my_matrix_adjugate(my_matrix_t *, my_matrix_t *);
 int my_matrix_copy(my_matrix_t *, my_matrix_t *);
