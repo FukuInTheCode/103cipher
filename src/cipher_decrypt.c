@@ -68,9 +68,20 @@ static int create_mess_matrix(my_matrix_t *mess_m, char *mess, uint32_t n)
     return 0;
 }
 
-static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
+static int print_mess(my_matrix_t *result, int i, int j)
 {
     char buf[1001] = {0};
+
+    sprintf(buf, "%.lf", result->arr[i][j]);
+    if (*buf == '0')
+        return 84;
+    printf("%c", (char)atoi(buf));
+    return 0;
+}
+
+static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
+{
+    int error = 0;
 
     printf("Key matrix:\n");
     for (int i = 0; i < key_m->m; i++) {
@@ -80,13 +91,10 @@ static int print_matrices(my_matrix_t *key_m, my_matrix_t *result)
         printf("\n");
     }
     printf("\nDecrypted message:\n");
-    for (int i = 0; i < result->m; i++) {
-        for (int j = 0; j < result->n && result->arr[i][j]; j++) {
-            sprintf(buf, "%lf\n", result->arr[i][j]);
-            printf("%c", (char)atoi(buf));
-            memset((void *)buf, 0, strlen(buf));
-        }
-    }
+    for (int i = 0; i < result->m && !error; i++)
+        for (int j = 0; j < result->n && !error; j++)
+            error |= print_mess(result, i, j);
+    printf("\n");
     return 0;
 }
 
